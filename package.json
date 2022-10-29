@@ -1,0 +1,24 @@
+{
+  "name": "sobczykssocialnetworkapi",
+  "version": "1.0.0",
+  "description": "Back End Social Network API",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sobe1290/SobczyksSocialNetworkAPI.git"
+  },
+  "author": "Patrick Sobczyk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sobe1290/SobczyksSocialNetworkAPI/issues"
+  },
+  "homepage": "https://github.com/sobe1290/SobczyksSocialNetworkAPI#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^6.7.0"
+  }
+}
