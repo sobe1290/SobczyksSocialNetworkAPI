@@ -19,8 +19,22 @@ const userSchema = new mongoose.Schema(
             unique: true,
             validate: [validateEmail, "Please enter a valid email"],
         },
-        //thoughts: Array of _id values referencing the Thought model
-        //friends: Array of _id values referencing the User model (self-reference)
+        thoughts: [
+            {
+                type: 'Thought',
+                ref: 'Thought',
+                //thoughts: Array of _id values referencing the Thought model
+            }
+        ],
+        friends: [
+            {
+                type: x,
+                ref: x,
+                //friends: Array of _id values referencing the User model (self-reference)
+            },
+        ],
+        
+        
    
         
     }
