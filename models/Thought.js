@@ -17,19 +17,38 @@ const thoughtSchema = new Schema(
             type: String,
             required: true,
         },
-        reactions: {
+        reactions: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'Thought'
+            }
+        ],
+
             //Array of nested documents created with the reactionSchema
-        }
+
+    },
+    {
+        toJSON: {
+            virtuals: true,
+            getters: true,
+          },
+          id: false,
     }
 )
+
+thoughtSchema
+    .virtual('reactionCount')
+    .get(function() {
+        return this.reactions.length
+    })
 
 //Create a virtual called reactionCount that retrieves the length of the thought's reactions array field on query.
 
 const reactionSchema = new Schema(
     {
         reactionId: {
-            type: mongoose.ObjectId,
-            default: '',
+            type: Schema.Types.ObjectId,
+            default: () => new Types.ObjectId(),
 
         },
         reactionBody: {
@@ -46,12 +65,19 @@ const reactionSchema = new Schema(
             default: Date.now, 
             //Use a getter method to format the timestamp on query
         }
+    },
+    {
+        toJSON: {
+            getters: true,
+          },
+          id: false,
+          timestamps: true,
     }
 
     //will be used as the reaction field's subdocument schema in the Thought model.
 )
 
 
-const Thoughts = model("Thoughts", thoughtSchema);
+const Thought = model("Thought", thoughtSchema);
 
-const Reaction = model ("Reaction", reactionSchema);
+module.exports = Thought;

@@ -16,13 +16,35 @@ mongoose
 
 const seedUsers = [
     {
-
+        "thoughts":[],
+        "friends": [],
+        "username" : "lernantino",
+        "email": "lernantino@gmail.com",
+        "friendCount" : 0,
+    },
+    {
+        "thoughts":[],
+        "friends": [],
+        "username" : "Amiko",
+        "email" : "amiko@gmail.com",
+        "friendCount" : 0,
     }
 ];
 
 const seedThoughts = [
     {
-
+        "thoughtText": "Thoughts are the words of our minds",
+        "username": "Amiko",
+        "reactions": [],
+        "__v": 0,
+        "reactionCount": 0
+    },
+    {
+        "thoughtText": "Here's a cool thought...",
+        "username": "lernantino",
+        "reactions": [],
+        "__v": 0,
+        "reactionCount": 0
     }
 ];
 
