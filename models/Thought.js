@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const {Schema, model}= require('mongoose');
 
-const thoughtSchema = new mongoose.Schema(
+const thoughtSchema = new Schema(
     {
         thoughtText: {
             type: String,
@@ -25,7 +25,7 @@ const thoughtSchema = new mongoose.Schema(
 
 //Create a virtual called reactionCount that retrieves the length of the thought's reactions array field on query.
 
-const reactionSchema = new mongoose.Schema (
+const reactionSchema = new Schema(
     {
         reactionId: {
             type: mongoose.ObjectId,

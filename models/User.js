@@ -1,11 +1,11 @@
-const mongoose = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 const validateEmail = function(email) {
     const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     return regex.test(email);
   };
 
-const userSchema = new mongoose.Schema(
+const userSchema = new Schema(
     {
         username: { 
             type: String, 
@@ -21,16 +21,14 @@ const userSchema = new mongoose.Schema(
         },
         thoughts: [
             {
-                type: 'Thought',
+                type: Schema.Types.ObjectId,
                 ref: 'Thought',
-                //thoughts: Array of _id values referencing the Thought model
             }
         ],
         friends: [
             {
-                type: x,
-                ref: x,
-                //friends: Array of _id values referencing the User model (self-reference)
+                type: Schema.Types.ObjectId,
+                ref: 'User',
             },
         ],
         
@@ -40,6 +38,12 @@ const userSchema = new mongoose.Schema(
     }
 )
 
-//Create a virtual called friendCount that retrieves the length of the user's friends array field on query.
+userSchema
+    .virtual('friendCount')
+    .get(function() {
+        return this.friends.length
+    })
 
-module.exports = mongoose.model("User", userSchema);
+const User = model('User', userSchema);
+
+module.exports = User;
