@@ -36,14 +36,12 @@ const seedThoughts = [
         "thoughtText": "Thoughts are the words of our minds",
         "username": "Amiko",
         "reactions": [],
-        "__v": 0,
         "reactionCount": 0
     },
     {
         "thoughtText": "Here's a cool thought...",
         "username": "lernantino",
         "reactions": [],
-        "__v": 0,
         "reactionCount": 0
     }
 ];
