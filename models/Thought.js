@@ -1,80 +1,78 @@
-const {Schema, model}= require('mongoose');
+const { Schema, model } = require('mongoose');
 const moment = require('moment');
 
 const reactionSchema = new Schema(
-    {
-        reactionId: {
-            type: Schema.Types.ObjectId,
-            default: () => new Types.ObjectId(),
+  {
+    reactionId: {
+      type: Schema.Types.ObjectId,
+      default: () => new Types.ObjectId(),
 
-        },
-        reactionBody: {
-            type: String,
-            required: true,
-            maxLength: 280,
-        },
-        username: {
-            type: String,
-            required: true,
-        },
-        createdAt :{
-            type: Date, 
-            default: Date.now, 
-            get: (time) => moment(time).format('MMMM Do YYYY, h:mm:ss a')
-            //Use a getter method to format the timestamp on query
-        }
     },
-    {
-        toJSON: {
-            getters: true,
-          },
-          timestamps: true,
-    }
+    reactionBody: {
+      type: String,
+      required: true,
+      maxLength: 280,
+    },
+    username: {
+      type: String,
+      required: true,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+      get: (time) => moment(time).format('MMMM Do YYYY, h:mm:ss a'),
+      // Use a getter method to format the timestamp on query
+    },
+  },
+  {
+    toJSON: {
+      getters: true,
+    },
+    timestamps: true,
+  },
 
-    //will be used as the reaction field's subdocument schema in the Thought model.
-)
+  // will be used as the reaction field's subdocument schema in the Thought model.
+);
 const thoughtSchema = new Schema(
-    {
-        thoughtText: {
-            type: String,
-            required: true,
-            minLength: 1,
-            maxLength: 280,
-        },
-        createdAt: {
-            type: Date,
-            default: Date.now,
-            get: (time) => moment(time).format('MMMM Do YYYY, h:mm:ss a')
-            //Use a getter method to format the timestamp on query
-        },
-        username: {
-            type: String,
-            required: true,
-        },
-        reactions: [reactionSchema],
-
-            //Array of nested documents created with the reactionSchema
-
+  {
+    thoughtText: {
+      type: String,
+      required: true,
+      minLength: 1,
+      maxLength: 280,
     },
-    {
-        toJSON: {
-            virtuals: true,
-            getters: true,
-          },
-          id: false,
-    }
-)
+    createdAt: {
+      type: Date,
+      default: Date.now,
+      get: (time) => moment(time).format('MMMM Do YYYY, h:mm:ss a'),
+      // Use a getter method to format the timestamp on query
+    },
+    username: {
+      type: String,
+      required: true,
+    },
+    reactions: [reactionSchema],
+
+    // Array of nested documents created with the reactionSchema
+
+  },
+  {
+    toJSON: {
+      virtuals: true,
+      getters: true,
+    },
+    id: false,
+  },
+);
 
 thoughtSchema
-    .virtual('reactionCount')
-    .get(function() {
-        return this.reactions.length
-    })
+  .virtual('reactionCount')
+  .get(function () {
+    return this.reactions.length;
+  });
 
-//Create a virtual called reactionCount that retrieves the length of the thought's reactions array field on query.
+// Create a virtual called reactionCount that retrieves the length of the thought's reactions array field on query.
 
-
-
-const Thought = model("Thought", thoughtSchema);
+const Thought = model('Thought', thoughtSchema);
 
 module.exports = Thought;
