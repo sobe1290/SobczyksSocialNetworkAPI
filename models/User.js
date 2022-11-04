@@ -1,10 +1,12 @@
 const { Schema, model } = require('mongoose');
 
+// function to validate the email field with an email regex
 const validateEmail = function (email) {
   const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   return regex.test(email);
 };
 
+// Creates the schema for users
 const userSchema = new Schema(
   {
     username: {
@@ -41,6 +43,7 @@ const userSchema = new Schema(
   },
 );
 
+// Virtual to add together the amount of friends in the array of that user
 userSchema
   .virtual('friendCount')
   .get(function () {

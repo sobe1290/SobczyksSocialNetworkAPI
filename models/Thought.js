@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose');
 const moment = require('moment');
 
+// Creates the schema for the reaction subdocument
 const reactionSchema = new Schema(
   {
     reactionId: {
@@ -21,7 +22,7 @@ const reactionSchema = new Schema(
       type: Date,
       default: Date.now,
       get: (time) => moment(time).format('MMMM Do YYYY, h:mm:ss a'),
-      // Use a getter method to format the timestamp on query
+      // Moment JS to format the time
     },
   },
   {
@@ -31,7 +32,7 @@ const reactionSchema = new Schema(
     timestamps: true,
   },
 
-  // will be used as the reaction field's subdocument schema in the Thought model.
+  // Creates the Schema for a thought
 );
 const thoughtSchema = new Schema(
   {
@@ -53,7 +54,7 @@ const thoughtSchema = new Schema(
     },
     reactions: [reactionSchema],
 
-    // Array of nested documents created with the reactionSchema
+    // Subdocument of reactionSchema is brought in here
 
   },
   {
@@ -65,13 +66,12 @@ const thoughtSchema = new Schema(
   },
 );
 
+// Virtual to add together the amount of reactions in the array
 thoughtSchema
   .virtual('reactionCount')
   .get(function () {
     return this.reactions.length;
   });
-
-// Create a virtual called reactionCount that retrieves the length of the thought's reactions array field on query.
 
 const Thought = model('Thought', thoughtSchema);
 

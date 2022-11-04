@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Users = require('../models/User');
 const Thoughts = require('../models/Thought');
 
+// seeds used to just add some basic entries if needed for testing some routes
 mongoose
   .connect('mongodb://localhost:27017/socialnetwork', {
     useNewURLParser: true,
