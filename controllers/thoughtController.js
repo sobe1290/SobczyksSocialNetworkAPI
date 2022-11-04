@@ -57,4 +57,26 @@ module.exports = {
       }
     );
   },
+  createReaction(req, res) {
+    Thought.findOneAndUpdate(
+      {_id: req.params.thoughtId},
+      {$addToSet:{ reactions : req.body }},
+      {new: true })
+    .then((dbUserData) => res.json(dbUserData))
+    .catch((err) => res.status(500).json(err));
+  },
+  removeReaction(req, res) {
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $pull: { reactions: { _id: req.body.reactionId } } },
+      { new: true }
+    )
+      .then((thought) =>
+        !thought
+          ? res.status(404).json({ message: 'No reaction with this id!' })
+          : res.json(thought)
+      )
+      .catch((err) => res.status(500).json(err));
+  },
 };
+
