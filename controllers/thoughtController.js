@@ -1,4 +1,5 @@
 const Thought = require('../models/Thought');
+const User = require('../models/User');
 
 module.exports = {
   getThoughts(req, res) {
@@ -15,10 +16,31 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  // create a new user
+  
   createThought(req, res) {
     Thought.create(req.body)
-      .then((dbThoughtData) => res.json(dbThoughtData))
-      .catch((err) => res.status(500).json(err));
+      .then((thought) => {
+        return User.findOneAndUpdate(
+          { _id: req.body.userId },
+          { $addToSet: { thoughts: thought._id } },
+          { new: true }
+        );
+      })
+      .then((user) =>
+        !user
+          ? res.status(404).json({
+              message: 'Thought created, but found no user with that ID',
+            })
+          : res.json('Created the thought')
+      )
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+    });
+  },
+  updateThought(req, res) {
+    Thought.findOneAndUpdate({_id: req.params.thoughtId},{"thoughtText" : req.body.thoughtText})
+    .then((dbUserData) => res.json(dbUserData))
+    .catch((err) => res.status(500).json(err));
   },
 };

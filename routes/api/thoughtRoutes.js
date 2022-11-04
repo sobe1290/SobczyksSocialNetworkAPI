@@ -3,11 +3,12 @@ const {
   createThought,
   getThoughts,
   getSingleThought,
+  updateThought,
 } = require('../../controllers/thoughtController.js');
 
 router.route('/').get(getThoughts).post(createThought);
 
-router.route('/:thoughtId').get(getSingleThought);
+router.route('/:thoughtId').get(getSingleThought).put(updateThought);
 
 //PUT to update a user by its _id
 
